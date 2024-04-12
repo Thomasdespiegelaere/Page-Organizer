@@ -86,7 +86,6 @@ window.addEventListener("load", () => {
     clearphoto();    
 });
 
-
 function showViewLiveResultButton() {
     if (window.self !== window.top) {
         document.querySelector(".contentarea").remove();
@@ -116,8 +115,37 @@ function takepicture() {
         context.drawImage(video, 0, 0, width, height);
 
         const data = canvas.toDataURL("image/png");
+        console.log("picture", data);
+
+        var blob = dataURLtoBlob(data);
+
+        console.log("blob", blob);
+        
+        var reader = new FileReader();
+        reader.readAsBinaryString(blob);
+
+        reader.onload = function (e) {
+            let bits = e.target.result;
+            let ob = {
+                created: new Date(),
+                data: bits
+            };
+            console.log("ob", ob);
+        }
         photo.setAttribute("src", data);
     } else {
         clearphoto();
     }
+}
+
+function dataURLtoBlob(dataURL) {
+    var arr = dataURL.split(',');
+    var mime = arr[0].match(/:(.*?);/)[1];
+    var bstr = atob(arr[1]);
+    var n = bstr.length;
+    var u8arr = new Uint8Array(n);
+    while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new Blob([u8arr], { type: mime });
 }
