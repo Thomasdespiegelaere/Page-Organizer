@@ -1,3 +1,4 @@
+import { Db } from './db.mjs';
 const width = 320;
 let height = 0; 
 
@@ -7,8 +8,10 @@ let video = null;
 let canvas = null;
 let photo = null;
 let startbutton = null;
+const db = new Db();
 
-window.addEventListener("load", () => {
+window.addEventListener("load", () => {    
+    db.InitDb();
     if (showViewLiveResultButton()) {
         return;
     }
@@ -131,6 +134,7 @@ function takepicture() {
                 data: bits
             };
             console.log("ob", ob);
+            db.setImage(ob);
         }
         photo.setAttribute("src", data);
     } else {
