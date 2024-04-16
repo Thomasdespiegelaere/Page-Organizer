@@ -19,13 +19,32 @@
     <meta name="theme-color" content="#00ACCD">
 </head>
 <body class="grey lighten-4">
+    <div class="contentarea">
+        <fieldset hidden>
+            <legend>Select camera</legend>
+            <select id="selectMediaDevice">
     
+            </select>
+        </fieldset>
+        <div class="camera">
+            <video id="video">Video stream not available.</video>
+            <button id="startbutton">Take photo</button>
+        </div>
+        <canvas id="canvas"> </canvas>
+        <div class="output">
+            <img id="photo" alt="The screen capture will appear in this box." />
+        </div>
+        <button id="getImage">Get image out db</button>
+        <div class="outputdb">
+            <img id="photodb" />
+        </div>
+    </div>
 
     <!--Materialize JavaScript at end of body for optimized loading-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
     <!-- Verwijzing naar eigen script. -->
-    <script src="scripts/script.js"></script>
+    <script type="module" src="scripts/script.js"></script>
     <script src="scripts/app.js"></script>
 </body>
 </html>
