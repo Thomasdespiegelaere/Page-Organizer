@@ -86,6 +86,12 @@ window.addEventListener("load", () => {
         false,
     );
 
+    document.getElementById("getImage").addEventListener("click", async () => {
+        var image = document.getElementById("photodb");
+        var record = await db.getImage(1);
+        image.src = 'data:image/jpeg;base64,' + btoa(record.data);
+    });
+
     clearphoto();    
 });
 
@@ -129,12 +135,12 @@ function takepicture() {
 
         reader.onload = function (e) {
             let bits = e.target.result;
-            let ob = {
+            let imageObject = {
                 created: new Date(),
                 data: bits
             };
-            console.log("ob", ob);
-            db.setImage(ob);
+            console.log("ob", imageObject);
+            db.setImage(imageObject);
         }
         photo.setAttribute("src", data);
     } else {

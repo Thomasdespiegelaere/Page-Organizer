@@ -23,35 +23,39 @@ export class Db {
     }
 
     setImage(ob) {
-        console.log('change event fired for input field');
+        console.log('store image');
 
-        let trans = db.transaction(['cachedForms'], 'readwrite');
-        let addReq = trans.objectStore('cachedForms').add(ob);
+        let transaction = db.transaction(['cachedForms'], 'readwrite');
+        let addRequest = transaction.objectStore('cachedForms').add(ob);
 
-        addReq.onerror = function (e) {
+        addRequest.onerror = function (e) {
             console.log('error storing data');
             console.error(e);
         }
 
-        trans.oncomplete = function (e) {
+        transaction.oncomplete = function (e) {
             console.log('data stored');
         }
     }
 
-    getImage() {
-        console.log('doImageTest');
-        let image = document.querySelector('#testImage');
-        let recordToLoad = parseInt(document.querySelector('#recordToLoad').value, 10);
-        if (recordToLoad === '') recordToLoad = 1;
+    async getImage(recordToLoad) {
+        return new Promise((resolve, reject) => {
+            if (recordToLoad === '') recordToLoad = 1;
 
-        let trans = db.transaction(['cachedForms'], 'readonly');
-        //hard coded id
-        let req = trans.objectStore('cachedForms').get(recordToLoad);
-        req.onsuccess = function (e) {
-            let record = e.target.result;
-            console.log('get success', record);
-            image.src = 'data:image/jpeg;base64,' + btoa(record.data);
-        }
+            let trans = db.transaction(['cachedForms'], 'readonly');
+
+            let req = trans.objectStore('cachedForms').get(recordToLoad);
+            req.onsuccess = function (e) {
+                let record = e.target.result;
+                return resolve(record);
+            };
+
+            req.onerror = function (e) {
+                console.log('error getting record');
+                console.error(e);
+                return reject(e);
+            };
+        });        
     }
 
 }

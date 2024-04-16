@@ -20,7 +20,6 @@
 </head>
 <body class="grey lighten-4">
     <div class="contentarea">
-        <h1>photo capture demo</h1>
         <fieldset hidden>
             <legend>Select camera</legend>
             <select id="selectMediaDevice">
@@ -34,6 +33,10 @@
         <canvas id="canvas"> </canvas>
         <div class="output">
             <img id="photo" alt="The screen capture will appear in this box." />
+        </div>
+        <button id="getImage">Get image out db</button>
+        <div class="outputdb">
+            <img id="photodb" />
         </div>
     </div>
 
