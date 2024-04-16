@@ -4,7 +4,7 @@ let dbReady = false;
 
 export class Db {
     InitDb() {
-        let request = indexedDB.open('testPics', dbVersion);
+        let request = indexedDB.open('Cursusen', dbVersion);
 
         request.onerror = function (e) {
             console.error('Unable to open database.');
@@ -17,7 +17,7 @@ export class Db {
 
         request.onupgradeneeded = function (e) {
             let db = e.target.result;
-            db.createObjectStore('cachedForms', { keyPath: 'id', autoIncrement: true });
+            db.createObjectStore('Images', { keyPath: 'id', autoIncrement: true });
             dbReady = true;
         }
     }
@@ -25,8 +25,8 @@ export class Db {
     setImage(ob) {
         console.log('store image');
 
-        let transaction = db.transaction(['cachedForms'], 'readwrite');
-        let addRequest = transaction.objectStore('cachedForms').add(ob);
+        let transaction = db.transaction(['Images'], 'readwrite');
+        let addRequest = transaction.objectStore('Images').add(ob);
 
         addRequest.onerror = function (e) {
             console.log('error storing data');
@@ -42,9 +42,9 @@ export class Db {
         return new Promise((resolve, reject) => {
             if (recordToLoad === '') recordToLoad = 1;
 
-            let trans = db.transaction(['cachedForms'], 'readonly');
+            let trans = db.transaction(['Images'], 'readonly');
 
-            let req = trans.objectStore('cachedForms').get(recordToLoad);
+            let req = trans.objectStore('Images').get(recordToLoad);
             req.onsuccess = function (e) {
                 let record = e.target.result;
                 return resolve(record);
