@@ -17,7 +17,10 @@ export class Db {
 
         request.onupgradeneeded = function (e) {
             let db = e.target.result;
-            db.createObjectStore('Images', { keyPath: 'id', autoIncrement: true });
+            var objectStore = db.createObjectStore('Images', { keyPath: 'id', autoIncrement: true });
+            objectStore.createIndex("courseNames", "courseName", { unique: false });
+            objectStore.createIndex("pages", "page", { unique: false });
+            objectStore.createIndex("types", "type", { unique: false });
             dbReady = true;
         }
     }

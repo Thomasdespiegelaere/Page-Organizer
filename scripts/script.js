@@ -137,10 +137,10 @@ function takepicture() {
             let imageObject = {
                 created: new Date(),
                 data: bits,
-                page: 1,
+                page: 3,
                 tags: ['tag1', 'tag2'],
                 courseName: "Wiskunde",
-                Type: pageType.Kladblad
+                type: pageType.Kladblad
             };
             console.log("ob", imageObject);
             db.setImage(imageObject);
