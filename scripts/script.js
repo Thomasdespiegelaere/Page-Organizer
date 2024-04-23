@@ -12,10 +12,9 @@ let video = null;
 let canvas = null;
 let photo = null;
 let startbutton = null;
-const db = new Db();
+const db = Db.getInstance();
 
 window.addEventListener("load", () => {    
-    db.InitDb();
     if (showViewLiveResultButton()) {
         return;
     }
