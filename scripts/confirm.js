@@ -3,7 +3,9 @@ var db = Db.getInstance();
 
 window.addEventListener("load", () => {
     console.log("loaded");
-    db.getImage(1).then((image) => {
+
+    db.getLastImage('tempImages').then((image) => {
+        console.log("image", image);
         document.getElementById("photo").src = 'data:image/jpeg;base64,' + btoa(image.data);
     });
 });

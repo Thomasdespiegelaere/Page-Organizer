@@ -142,7 +142,7 @@ function takepicture() {
                 type: pageType.Kladblad
             };
             console.log("ob", imageObject);
-            db.setImage(imageObject);
+            db.setImage('tempImages', imageObject);
         }
         photo.setAttribute("src", data);
         window.location = "http://127.0.0.1:5500/Project-Web-Apps/Page-Organizer/pages/confirm.html";        
