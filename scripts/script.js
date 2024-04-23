@@ -1,6 +1,10 @@
 import { Db } from './db.mjs';
 const width = 320;
 let height = 0; 
+const pageType = {
+    Kladblad: 1,
+    Cursus: 2,
+}
 
 let streaming = false;
 
@@ -8,10 +12,9 @@ let video = null;
 let canvas = null;
 let photo = null;
 let startbutton = null;
-const db = new Db();
+const db = Db.getInstance();
 
 window.addEventListener("load", () => {    
-    db.InitDb();
     if (showViewLiveResultButton()) {
         return;
     }
@@ -124,12 +127,7 @@ function takepicture() {
         context.drawImage(video, 0, 0, width, height);
 
         const data = canvas.toDataURL("image/png");
-        console.log("picture", data);
-
-        var blob = dataURLtoBlob(data);
-
-        console.log("blob", blob);
-        
+        var blob = dataURLtoBlob(data);        
         var reader = new FileReader();
         reader.readAsBinaryString(blob);
 
@@ -137,7 +135,11 @@ function takepicture() {
             let bits = e.target.result;
             let imageObject = {
                 created: new Date(),
-                data: bits
+                data: bits,
+                page: 3,
+                tags: ['tag1', 'tag2'],
+                courseName: "Wiskunde",
+                type: pageType.Kladblad
             };
             console.log("ob", imageObject);
             db.setImage(imageObject);
