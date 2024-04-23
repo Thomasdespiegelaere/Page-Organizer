@@ -4,10 +4,15 @@ const db = Db.getInstance();
 window.addEventListener("load", async () => {    
     const courseList = document.getElementById("courselist");
 
-    for (let index = 1; index < 3; index++) {
-        var image = document.createElement("img");
-        var record = await db.getImage(index);
-        image.src = 'data:image/jpeg;base64,' + btoa(record.data);
-        courseList.appendChild(image);
-    }    
+    db.getAllImages().then(images => {
+        images.forEach(image => {
+            var img = document.createElement("img");
+            img.src = 'data:image/jpeg;base64,' + btoa(image.data);
+            courseList.appendChild(img);
+        });
+    });
 });
+
+function CreateFolders() {
+    var folder = document.createElement("div");
+}

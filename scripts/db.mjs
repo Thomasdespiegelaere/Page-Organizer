@@ -64,6 +64,29 @@ export const Db = (() => {
                         return reject(e);
                     };
                 });
+            },
+            getAllImages: function () {
+                var images = [];
+                return new Promise((resolve, reject) => {
+                    var imagesObjectStore = this.db.transaction(['Images'], 'readonly').objectStore('Images');
+                    var request = imagesObjectStore.openCursor();
+                    request.onsuccess = function (event) {
+                        var cursor = event.target.result;
+
+                        if (cursor) {
+                            images.push(cursor.value);
+                            cursor.continue();
+                        }
+                        else
+                            return resolve(images);
+                    }
+
+                    request.onerror = function (e) {
+                        console.log('error getting record');
+                        console.error(e);
+                        return reject(e);
+                    }
+                });
             }
         };
     }
