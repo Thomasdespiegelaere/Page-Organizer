@@ -3,9 +3,9 @@ export const Db = (() => {
     function createInstance() {
         return {
             constructor: function () {
-                this.db; // = instance.db;
-                this.dbVersion; // = instance.dbVersion;
-                this.dbReady; // = instance.dbReady;                
+                this.db;
+                this.dbVersion; 
+                this.dbReady;                 
             },
             InitDb: function () {
                 let request = indexedDB.open('Cursusen', this.dbVersion);
@@ -23,6 +23,7 @@ export const Db = (() => {
                 request.onupgradeneeded = function (e) {
                     this.db = e.target.result;
                     var objectStore = this.db.createObjectStore('Images', { keyPath: 'id', autoIncrement: true });
+                    this.db.createObjectStore('Courses', { keyPath: 'id', autoIncrement: true });
                     objectStore.createIndex("courseNames", "courseName", { unique: false });
                     objectStore.createIndex("pages", "page", { unique: false });
                     objectStore.createIndex("types", "type", { unique: false });
@@ -79,6 +80,29 @@ export const Db = (() => {
                         }
                         else
                             return resolve(images);
+                    }
+
+                    request.onerror = function (e) {
+                        console.log('error getting record');
+                        console.error(e);
+                        return reject(e);
+                    }
+                });
+            },
+            getAllCourses: function () {
+                var courses = [];
+                return new Promise((resolve, reject) => {
+                    var coursesObjectStore = this.db.transaction(['Courses'], 'readonly').objectStore('Courses');
+                    var request = coursesObjectStore.openCursor();
+                    request.onsuccess = function (event) {
+                        var cursor = event.target.result;
+
+                        if (cursor) {
+                            courses.push(cursor.value);
+                            cursor.continue();
+                        }
+                        else
+                            return resolve(courses);
                     }
 
                     request.onerror = function (e) {
