@@ -9,43 +9,40 @@ const pageType = {
 let streaming = false;
 let video = null;
 let canvas = null;
-let photo = null;
 let startbutton = null;
 const db = Db.getInstance();
 
 window.addEventListener("load", () => {    
-    document.getElementById("video").style.height = screen.height + "px";
-    document.getElementById("video").style.width = screen.width + "px";
+    document.getElementById("video").style.height = screen.height * 0.65 + "px";
+    document.getElementById("video").style.width = screen.width * 0.9 + "px";
     if (showViewLiveResultButton()) {
         return;
     }
     video = document.getElementById("video");
     canvas = document.getElementById("canvas");
-    photo = document.getElementById("photo");
     startbutton = document.getElementById("startbutton");
-
-    var selector = document.querySelector("#selectMediaDevice");
 
     navigator.mediaDevices.enumerateDevices()
         .then(devices => {
             console.log(devices);
-
-            // Alle devices in de selection tonen.    
-            var option = document.createElement('option');
-            option.textContent = "None";
-            option.setAttribute('data-id', "None");
-            selector.appendChild(option);
+            var deviceIds = [];
+            var deviceId;
             for (var i = 0; i < devices.length; i++) {
                 if (devices[i].kind == "videoinput") {
-                    option = document.createElement('option');
-                    option.textContent = devices[i].label + " (" + devices[i].kind + ")";
-                    option.setAttribute('data-id', devices[i].deviceId);
-                    selector.appendChild(option);
-                    console.log("Single option: ", option);
+                    deviceIds.push(devices[i]);
+                    
                 }
             }
 
-            var deviceId = selector.options[selector.selectedIndex].getAttribute("data-id");
+            deviceIds.forEach(element => {
+                if (element.label.includes("back")){
+                    deviceId = element.deviceId;
+                }
+            });
+            if(deviceId == undefined){
+                deviceId = deviceIds[0].deviceId;
+            }
+            console.log("Single option: ", deviceId);
 
             navigator.mediaDevices
                 .getUserMedia({ video: { deviceId: deviceId } })
@@ -111,7 +108,6 @@ function clearphoto() {
     context.fillRect(0, 0, canvas.width, canvas.height);
 
     const data = canvas.toDataURL("image/png");
-    // photo.setAttribute("src", data);
 }
 
 function takepicture() {
