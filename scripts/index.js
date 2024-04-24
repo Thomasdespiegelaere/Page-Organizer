@@ -1,4 +1,4 @@
-import { Db } from './db.mjs';
+import { Db } from './modules/db.mjs';
 const width = 320;
 let height = 0; 
 const pageType = {

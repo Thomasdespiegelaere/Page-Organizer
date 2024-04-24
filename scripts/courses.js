@@ -1,4 +1,4 @@
-import { Db } from "./db.mjs";
+import { Db } from "./modules/db.mjs";
 
 const db = Db.getInstance();
 window.addEventListener("load", async () => {    
