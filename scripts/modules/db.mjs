@@ -24,6 +24,7 @@ export const Db = (() => {
                     this.db = e.target.result;
                     var objectStore = this.db.createObjectStore('Images', { keyPath: 'id', autoIncrement: true });
                     this.db.createObjectStore('Courses', { keyPath: 'id', autoIncrement: true });
+                    this.db.createObjectStore('tempImages', { keyPath: 'id', autoIncrement: true });
                     objectStore.createIndex("courseNames", "courseName", { unique: false });
                     objectStore.createIndex("pages", "page", { unique: false });
                     objectStore.createIndex("types", "type", { unique: false });
@@ -31,11 +32,11 @@ export const Db = (() => {
                     this.dbReady = true;
                 }
             },
-            setImage: function (ob) {
+            setImage: function (table, ob) {
                 console.log('store image');
 
-                let transaction = this.db.transaction(['Images'], 'readwrite');
-                let addRequest = transaction.objectStore('Images').add(ob);
+                let transaction = this.db.transaction([table], 'readwrite');
+                let addRequest = transaction.objectStore(table).add(ob);
 
                 addRequest.onerror = function (e) {
                     console.log('error storing data');
@@ -46,14 +47,14 @@ export const Db = (() => {
                     console.log('data stored');
                 }
             },
-            getImage: function (recordToLoad) {
+            getImage: function (table, recordToLoad) {
                 console.log(this.db);
                 return new Promise((resolve, reject) => {
                     if (recordToLoad === '') recordToLoad = 1;
 
-                    let trans = this.db.transaction(['Images'], 'readonly');
+                    let trans = this.db.transaction([table], 'readonly');
 
-                    let req = trans.objectStore('Images').get(recordToLoad);
+                    let req = trans.objectStore(table).get(recordToLoad);
                     req.onsuccess = function (e) {
                         let record = e.target.result;
                         return resolve(record);
@@ -111,7 +112,35 @@ export const Db = (() => {
                         return reject(e);
                     }
                 });
-            }
+            },
+            getLastImage: function (table) {
+                console.log(this.db);
+                return new Promise((resolve, reject) => {
+                    let trans = this.db.transaction([table], 'readonly');
+
+                    let req = trans.objectStore(table).count();
+                    req.onsuccess = function (e) {
+                        let count = e.target.result;
+                        let request = trans.objectStore(table).get(count);
+                        request.onsuccess = function (e) {
+                            let record = e.target.result;
+                            return resolve(record);
+                        };
+
+                        request.onerror = function (e) {
+                            console.log('error getting record');
+                            console.error(e);
+                            return reject(e);
+                        };
+                    };
+
+                    req.onerror = function (e) {
+                        console.log('error getting record');
+                        console.error(e);
+                        return reject(e);
+                    };
+                });
+            },
         };
     }
     return {

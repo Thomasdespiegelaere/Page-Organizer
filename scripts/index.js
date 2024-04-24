@@ -1,4 +1,4 @@
-import { Db } from './db.mjs';
+import { Db } from './modules/db.mjs';
 const width = 320;
 let height = 0; 
 const pageType = {
@@ -7,7 +7,6 @@ const pageType = {
 }
 
 let streaming = false;
-
 let video = null;
 let canvas = null;
 let photo = null;
@@ -15,6 +14,8 @@ let startbutton = null;
 const db = Db.getInstance();
 
 window.addEventListener("load", () => {    
+    document.getElementById("video").style.height = screen.height + "px";
+    document.getElementById("video").style.width = screen.width + "px";
     if (showViewLiveResultButton()) {
         return;
     }
@@ -89,12 +90,6 @@ window.addEventListener("load", () => {
         false,
     );
 
-    document.getElementById("getImage").addEventListener("click", async () => {
-        var image = document.getElementById("photodb");
-        var record = await db.getImage(1);
-        image.src = 'data:image/jpeg;base64,' + btoa(record.data);
-    });
-
     clearphoto();    
 });
 
@@ -116,7 +111,7 @@ function clearphoto() {
     context.fillRect(0, 0, canvas.width, canvas.height);
 
     const data = canvas.toDataURL("image/png");
-    photo.setAttribute("src", data);
+    // photo.setAttribute("src", data);
 }
 
 function takepicture() {
@@ -142,9 +137,9 @@ function takepicture() {
                 type: pageType.Kladblad
             };
             console.log("ob", imageObject);
-            db.setImage(imageObject);
+            db.setImage('tempImages', imageObject);
         }
-        photo.setAttribute("src", data);
+        window.location = "http://127.0.0.1:5500/Project-Web-Apps/Page-Organizer/pages/confirm.html";        
     } else {
         clearphoto();
     }

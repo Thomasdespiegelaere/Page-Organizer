@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Organizer</title>
+</head>
+<body>
+    <div class="contentarea">
+        <div class="output">
+            <img id="photo" alt="The screen capture will appear in this box." />
+            <input id="hiddenId" hidden>
+        </div>
+    </div>
+    <label>Page: </label>
+    <input id="pageNumber" type="number">
+    <br/>
+    <label>Tags (comma seperated): </label>
+    <input id="tags" type="text">
+    <br />
+    <label>Course name: </label>
+    <input id="courseName" type="text">
+    <br />
+    <select id="type">
+        <option value="1">Kladblad</option>
+        <option value="2">Course book</option>
+    </select>
+    <br />
+    <br />
+    <input type="button" value="Save" id="save">
+    <script type="module" src="../scripts/confirm.js"></script>
+</body>
+</html>
