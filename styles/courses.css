@@ -2,6 +2,15 @@
     margin: 10px;
 }
 
+#search{
+    margin-left: 25px;
+}
+
+.input-field{
+    margin-left: 5px;
+    width: 90%;
+}
+
 .card-grid {
     display: grid;
     grid-template-columns: 1fr;

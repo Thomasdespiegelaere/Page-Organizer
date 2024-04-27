@@ -19,7 +19,7 @@ window.addEventListener("load", () => {
         var imageId = document.getElementById("hiddenId").value;
         console.log("saving:", page, tags, courseName, type, imageId);
 
-        db.getImage('tempImages', Number(imageId)).then((image) => {
+        db.getImage('tempImages', Number(imageId)).then(async (image) => {
             console.log("image:", image);
             let imageObject = {
                 created: new Date(),
@@ -28,8 +28,15 @@ window.addEventListener("load", () => {
                 tags: tags,
                 courseName: courseName,
                 type: Number(type)
-            };   
-            db.setImage("Images", imageObject);       
+            };              
+            db.setImage("Images", imageObject);    
+            if (await db.doesCourseExist(courseName) === false) {
+                let courseObject = {
+                    created: new Date(),
+                    Name: courseName,
+                };   
+                db.setCourse(courseObject);
+            }
             window.location = "http://127.0.0.1:5500/Project-Web-Apps/Page-Organizer/";  
         });
     });

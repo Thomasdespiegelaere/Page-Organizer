@@ -4,8 +4,8 @@ export const Db = (() => {
         return {
             constructor: function () {
                 this.db;
-                this.dbVersion; 
-                this.dbReady;                 
+                this.dbVersion;
+                this.dbReady;
             },
             InitDb: function () {
                 let request = indexedDB.open('Cursusen', this.dbVersion);
@@ -23,8 +23,9 @@ export const Db = (() => {
                 request.onupgradeneeded = function (e) {
                     this.db = e.target.result;
                     var objectStore = this.db.createObjectStore('Images', { keyPath: 'id', autoIncrement: true });
-                    this.db.createObjectStore('Courses', { keyPath: 'id', autoIncrement: true });
+                    var coursesObjectStore = this.db.createObjectStore('Courses', { keyPath: 'id', autoIncrement: true });
                     this.db.createObjectStore('tempImages', { keyPath: 'id', autoIncrement: true });
+                    coursesObjectStore.createIndex("Names", "Name", { unique: false });
                     objectStore.createIndex("courseNames", "courseName", { unique: false });
                     objectStore.createIndex("pages", "page", { unique: false });
                     objectStore.createIndex("types", "type", { unique: false });
@@ -37,6 +38,21 @@ export const Db = (() => {
 
                 let transaction = this.db.transaction([table], 'readwrite');
                 let addRequest = transaction.objectStore(table).add(ob);
+
+                addRequest.onerror = function (e) {
+                    console.log('error storing data');
+                    console.error(e);
+                }
+
+                transaction.oncomplete = function (e) {
+                    console.log('data stored');
+                }
+            },
+            setCourse: function (ob) {
+                console.log('store course');
+
+                let transaction = this.db.transaction('Courses', 'readwrite');
+                let addRequest = transaction.objectStore('Courses').add(ob);
 
                 addRequest.onerror = function (e) {
                     console.log('error storing data');
@@ -141,6 +157,27 @@ export const Db = (() => {
                     };
                 });
             },
+            doesCourseExist: function (courseName) {
+                return new Promise((resolve, reject) => {
+                    var todosObjectStore = this.db.transaction("Courses", "readonly").objectStore("Courses");
+                    var index = todosObjectStore.index("Names");
+                    var request = index.get(courseName);
+
+                    request.onsuccess = (event) => {
+                        console.log("De gevonden course: ", event.target.result);
+                        if (event.target.result === undefined) {
+                            return resolve(false);
+                        }
+                        return resolve(true);
+                    }
+
+                    request.onerror = (e) => {
+                        console.log('error getting record');
+                        console.error(e);
+                        return reject(e);
+                    };
+                });
+            }
         };
     }
     return {
