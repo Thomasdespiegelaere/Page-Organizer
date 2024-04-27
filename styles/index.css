@@ -3,38 +3,16 @@
     --secondary:#00D4E6;
     --title: #00ACCD;
 }
-#video {
-  border: 1px solid black;
-  box-shadow: 2px 2px 3px black;
-}
-
-#photo {
-  border: 1px solid black;
-  box-shadow: 2px 2px 3px black;
-  width: 320px;
-  height: 240px;
-}
 
 #canvas {
   display: none;
 }
 
-.camera {
-  width: 340px;
-  display: inline-block;
-}
-
-.output {
-  width: 340px;
-  display: inline-block;
-  vertical-align: top;
-}
-
 #startbutton {
   display: block;
   position: relative;
-  margin-left: 90vh;
-  margin-right: auto;
+  margin-left: 47%;
+  margin-right: auto; 
   bottom: 120px;
   background-color: transparent;
   border: transparent;
@@ -43,20 +21,14 @@
 .contentarea {
   font-size: 16px;
   font-family: "Lucida Grande", "Arial", sans-serif;
-  width: 760px;
-}
-
-select,
-video {
-  padding: 5px;
   width: 100%;
-  box-sizing: border-box;
-}
-
-.nav-wrapper {
-  background-color: var(--primary);
+  height: 100%;
 }
 
 .material-symbols-outlined {
   font-size: 92px;
+}
+
+.brand-logo {
+  margin-left: 10px;
 }

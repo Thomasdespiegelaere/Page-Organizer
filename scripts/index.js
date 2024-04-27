@@ -12,9 +12,14 @@ let canvas = null;
 let startbutton = null;
 const db = Db.getInstance();
 
-window.addEventListener("load", () => {    
+addEventListener("resize", (event) => { 
     document.getElementById("video").style.height = screen.height * 0.65 + "px";
-    document.getElementById("video").style.width = screen.width * 0.9 + "px";
+    document.getElementById("video").style.width = screen.width + "px";
+});
+
+window.addEventListener("load", () => {    
+    document.getElementById("video").style.height = screen.height * 0.65  + "px";
+    document.getElementById("video").style.width = screen.width  + "px";
     if (showViewLiveResultButton()) {
         return;
     }
