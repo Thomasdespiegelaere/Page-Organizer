@@ -1,10 +1,7 @@
 import { Db } from './modules/db.mjs';
+import { pageType } from './helpers/pagetype.js';
 const width = 320;
 let height = 0; 
-const pageType = {
-    Kladblad: 1,
-    Cursus: 2,
-}
 
 let streaming = false;
 let video = null;
