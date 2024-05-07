@@ -9,7 +9,7 @@ window.addEventListener("load", async () => {
             var card = createCard(folder.Name);
             grid.appendChild(card);
         });
-    });
+    });    
 });
 
 function createCard(title) {

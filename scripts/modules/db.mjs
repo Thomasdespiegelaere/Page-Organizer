@@ -131,6 +131,31 @@ export const Db = (() => {
                     };
                 });
             },
+            getFilteredImagesTags: function (table, filter, filterTerm) {
+                var images = [];
+                return new Promise((resolve, reject) => {
+                    var todosObjectStore = this.db.transaction(table, "readonly").objectStore(table);
+                    var index = todosObjectStore.index(filter);
+                    var request = index.openCursor(filterTerm);
+
+                    request.onsuccess = function (event) {
+                        var cursor = event.target.result;
+
+                        if (cursor) {
+                            images.push(cursor.value);
+                            cursor.continue();
+                        }
+                        else
+                            return resolve(images);
+                    }
+
+                    request.onerror = (e) => {
+                        console.log('error getting record');
+                        console.error(e);
+                        return reject(e);
+                    };
+                });
+            },
             getAllCourses: function () {
                 var courses = [];
                 return new Promise((resolve, reject) => {
