@@ -41,3 +41,39 @@
         grid-template-columns: repeat(3, 1fr); 
     }
 }
+
+.card {
+    border: 1px solid #ddd; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+    overflow: hidden; 
+    background-color: white; 
+    margin: 10px; 
+    transition: transform 0.3s; 
+}
+
+.card img {
+    width: 100%; 
+    height: auto; 
+}
+
+.card p {
+    padding: 10px; 
+    margin: 0; 
+    text-align: center; 
+}
+
+.card:hover {
+    transform: scale(1.05); 
+}
+
+nav {
+    z-index: 10; 
+    padding: 10px; 
+}
+
+.sticky-nav {
+    position: -webkit-sticky; 
+    position: sticky; 
+    top: 0; 
+}

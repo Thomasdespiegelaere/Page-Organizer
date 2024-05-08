@@ -23,12 +23,7 @@ window.addEventListener("load", async () => {
         filterdImages.forEach(image => {            
             if (image.type == getPageType(type)) {                         
                 if (image.page == Number(searchPage.value) || filtertags(image, searchTags.value)) {
-                    var card = document.createElement('img');
-                    card.src = 'data:image/jpeg;base64,' + btoa(image.data);
-                    card.addEventListener('click', () => {
-                        card.requestFullscreen();
-                    });
-                    grid.appendChild(card);
+                    createCard(grid, image);
                 }
             }
         });
@@ -39,13 +34,8 @@ window.addEventListener("load", async () => {
                 var filterdImages = await db.getFilteredImages('Images', 'courseNames', course);
                 filterdImages.forEach(image => {        
                     if (image.type === pageType.Cursus)
-                    {                       
-                        var card = document.createElement('img');
-                        card.src = 'data:image/jpeg;base64,' + btoa(image.data);
-                        card.addEventListener('click', () => {
-                            card.requestFullscreen();
-                        });
-                        grid.appendChild(card);                       
+                    { 
+                        createCard(grid, image);                 
                     }                                
                 });
             break;
@@ -53,12 +43,7 @@ window.addEventListener("load", async () => {
                 var filterdImages = await db.getFilteredImages('Images', 'courseNames', course);
                 filterdImages.forEach(image => {
                     if (image.type === pageType.Kladblad) {
-                        var card = document.createElement('img');
-                        card.src = 'data:image/jpeg;base64,' + btoa(image.data);
-                        card.addEventListener('click', () => {
-                            card.requestFullscreen();
-                        });
-                        grid.appendChild(card);
+                        createCard(grid, image);
                     }
                 });
             break;
@@ -66,6 +51,25 @@ window.addEventListener("load", async () => {
             break;
         }
 });
+
+function createCard(grid, image) {    
+    var card = document.createElement('div');
+    card.className = 'card';
+
+    var img = document.createElement('img');
+    img.src = 'data:image/jpeg;base64,' + btoa(image.data);
+    img.addEventListener('click', () => {
+        img.requestFullscreen();
+    });
+
+    var p = document.createElement('p');
+    p.textContent = "Pagina: " + image.page + " Tags: " + image.tags;
+
+    card.appendChild(img);
+    card.appendChild(p);
+
+    grid.appendChild(card);
+}
 
 function filtertags(image, searchTags){
     var isFound = false;

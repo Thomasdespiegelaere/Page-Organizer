@@ -15,7 +15,6 @@ window.addEventListener("load", async () => {
 function createCard(title) {
     const card = document.createElement('div');
     card.className = 'card blue-grey darken-1';
-    card.style.cursor = 'pointer';
 
     card.addEventListener('click', () => {
         window.location.href = 'http://127.0.0.1:5500/Project-Web-Apps/Page-Organizer/pages/typeselection.html?course=' + title;
