@@ -1,7 +1,10 @@
 var express = require('express');
 var app = express();
 var Datastore = require('nedb');
-var db = new Datastore();
+var db = new Datastore({
+    filename: 'subscriptions.db', 
+    autoload: true 
+});
 var webpush = require('web-push');
 
 const vapidKeys = {
@@ -10,7 +13,7 @@ const vapidKeys = {
 };
 
 webpush.setVapidDetails(
-    'mailto:ruben.buysschaert@vives.be',
+    'mailto:thomas.despiegelaere@student.vives.be',
     vapidKeys.publicKey,
     vapidKeys.privateKey
 );
