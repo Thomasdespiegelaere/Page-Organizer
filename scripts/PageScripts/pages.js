@@ -1,5 +1,5 @@
-import { Db } from "./modules/db.mjs";
-import { getPageType, pageType } from "./helpers/pagetype.js";
+import { Db } from "../modules/db.mjs";
+import { getPageType, pageType } from "../helpers/pagetype.js";
 const db = Db.getInstance();
 
 window.addEventListener("load", async () => {

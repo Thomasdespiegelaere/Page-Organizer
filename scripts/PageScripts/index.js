@@ -1,5 +1,5 @@
-import { Db } from './modules/db.mjs';
-import { pageType } from './helpers/pagetype.js';
+import { Db } from '../modules/db.mjs';
+import { pageType } from '../helpers/pagetype.js';
 const width = 320;
 let height = 0; 
 
