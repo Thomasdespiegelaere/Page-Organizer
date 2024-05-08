@@ -13,7 +13,7 @@ window.addEventListener("load", async () => {
 
     const course = urlParams.get('course');
     const type = urlParams.get('type');
-    backArrow.setAttribute('href', 'http://127.0.0.1:5500/Project-Web-Apps/Page-Organizer/pages/typeselection.html?course=' + course);
+    backArrow.setAttribute('href', 'http://localhost:3000/pages/typeselection.html?course=' + course);
 
     document.getElementById('searchForm').addEventListener('submit', async () => {
         event.preventDefault();

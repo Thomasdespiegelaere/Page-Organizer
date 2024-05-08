@@ -69,7 +69,7 @@ export class Video {
                 console.log("ob", imageObject);
                 db.setImage('tempImages', imageObject);
             }
-            window.location = "http://127.0.0.1:5500/Project-Web-Apps/Page-Organizer/pages/confirm.html";
+            window.location = "http://localhost:3000/pages/confirm.html";            
         } else {
             this.clearphoto();
         }
