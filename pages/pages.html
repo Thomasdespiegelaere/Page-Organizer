@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/pages.css">
+    <title>Page Organizer</title>
+</head>
+
+<body>
+    <nav class="sticky-nav">
+        <div class="nav-wrapper">
+            <a href="typeselection.html" id="arrow_back" class="brand-logo left">
+                <i class="large material-icons">arrow_back</i>
+            </a>           
+        </div>
+    </nav>
+    <div id="content">
+        <form id="searchForm">
+            <div class="input-field">
+                <input id="searchPage" type="number" placeholder="Page Number">
+                <input id="searchTags" type="text" placeholder="Tag">
+                <input class="waves-effect waves-light btn" type="submit">
+            </div>
+        </form>
+        <div class="card-grid">
+        </div>
+    </div>
+    <script type="module" src="../scripts/PageScripts/pages.js"></script>
+</body>
+
+</html>

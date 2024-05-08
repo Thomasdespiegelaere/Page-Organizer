@@ -3,31 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="../styles/confirm.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>Page Organizer</title>
+    <meta name="theme-color" content="#00ACCD">
 </head>
 <body>
+    <nav>
+        <div class="nav-wrapper">
+            <a href="../index.html" class="brand-logo left"><i class="large material-icons">arrow_back</i></a>
+        </div>
+    </nav>
     <div class="contentarea">
         <div class="output">
             <img id="photo" alt="The screen capture will appear in this box." />
             <input id="hiddenId" hidden>
         </div>
-    </div>
-    <label>Page: </label>
-    <input id="pageNumber" type="number">
-    <br/>
-    <label>Tags (comma seperated): </label>
-    <input id="tags" type="text">
-    <br />
-    <label>Course name: </label>
-    <input id="courseName" type="text">
-    <br />
-    <select id="type">
-        <option value="1">Kladblad</option>
-        <option value="2">Course book</option>
-    </select>
-    <br />
-    <br />
-    <input type="button" value="Save" id="save">
-    <script type="module" src="../scripts/confirm.js"></script>
+        <input id="pageNumber" type="number" placeholder="Page">
+        <br />
+        <input id="tags" type="text"placeholder="Tags (comma seperated)" >
+        <br />
+        <input type="text" id="courseName" placeholder="Course name" required>
+        <br />
+        <select style="display: block;" id="type">
+            <option value="1">Course book</option>
+            <option value="2">Kladblad</option>
+        </select>
+        <br />
+        <br />
+        <a id="save" class="waves-effect waves-light btn">Save</a>
+    </div>   
+    <script type="module" src="../scripts/PageScripts/confirm.js"></script>    
 </body>
 </html>

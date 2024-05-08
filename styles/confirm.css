@@ -1,0 +1,35 @@
+.contentarea {
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    padding: 20px; 
+    background-color: white; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+    margin: 20px; 
+    max-width: 500px;
+    margin: 40px auto; 
+}
+
+.contentarea input,
+.contentarea select {
+    width: 100%; 
+    margin-bottom: 20px; 
+    padding: 10px; 
+    border-radius: 5px; 
+    border: 1px solid #ccc; 
+    text-align: center; 
+}
+
+.contentarea img {
+    max-width: 100%; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+    margin-bottom: 20px; 
+}
+
+.contentarea a {
+    width: 100%;
+    text-align: center; 
+}
