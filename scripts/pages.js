@@ -6,7 +6,7 @@ window.addEventListener("load", async () => {
     var backArrow = document.getElementById('arrow_back');    
     var grid = document.querySelector('.card-grid');
     var searchPage = document.getElementById('searchPage');
-    var searchTags = document.getElementById('searchTags').value;
+    var searchTags = document.getElementById('searchTags');
     const queryString = window.location.search;
 
     const urlParams = new URLSearchParams(queryString);
@@ -17,11 +17,12 @@ window.addEventListener("load", async () => {
 
     document.getElementById('searchForm').addEventListener('submit', async () => {
         event.preventDefault();
-        grid.innerHTML = '';
+        if (searchPage.value === '' && searchTags.value === '') return;
+        grid.innerHTML = '';        
         var filterdImages = await db.getFilteredImages('Images', 'courseNames', course);
         filterdImages.forEach(image => {            
-            if (image.type == getPageType(type)) {                
-                if (image.page == Number(searchPage.value)) {
+            if (image.type == getPageType(type)) {                         
+                if (image.page == Number(searchPage.value) || filtertags(image, searchTags.value)) {
                     var card = document.createElement('img');
                     card.src = 'data:image/jpeg;base64,' + btoa(image.data);
                     card.addEventListener('click', () => {
@@ -65,3 +66,12 @@ window.addEventListener("load", async () => {
             break;
         }
 });
+
+function filtertags(image, searchTags){
+    var isFound = false;
+    image.tags.forEach(tag => {        
+        if (tag.toLowerCase() == searchTags.toLowerCase())
+            isFound = true;  
+    });
+    return isFound;
+}

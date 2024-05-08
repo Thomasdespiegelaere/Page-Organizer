@@ -13,7 +13,7 @@ window.addEventListener("load", () => {
     document.getElementById("save").addEventListener("click", () => {
         var page = document.getElementById("pageNumber").value;
         var tags = document.getElementById("tags").value;
-        tags = tags.split(",");
+        tags = tags.split(",").map(tag => tag.trim());
         var courseName = document.getElementById("courseName").value;
         var type = document.getElementById("type").value;
         var imageId = document.getElementById("hiddenId").value;

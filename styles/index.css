@@ -8,29 +8,6 @@
   display: none;
 }
 
-#startbutton {
-  display: block;
-  position: relative;
-  margin-left: 103vh; 
-  margin-right: auto; 
-  bottom: 120px;
-  background-color: transparent;
-  border: transparent;
-}
-
-@media screen and (max-width: 600px) {
-  #startbutton {
-    display: block;
-    position: relative;
-    margin-left: 20vh;
-    margin-right: auto; 
-    bottom: 120px;
-    background-color: transparent;
-    border: transparent;
-  }
-  
-}
-
 .contentarea {
   font-size: 16px;
   font-family: "Lucida Grande", "Arial", sans-serif;
@@ -45,4 +22,29 @@
 
 .brand-logo {
   margin-left: 10px;
+}
+
+.camera {
+    width: 100%; 
+    height: 100%; 
+    justify-content: center;
+    position: relative;
+    background: #333; 
+}
+
+
+#startbutton {
+    position: absolute; 
+    bottom: 10px;
+    left: 50%; 
+    transform: translateX(-50%); 
+    z-index: 1; 
+    padding: 10px; 
+    background-color: transparent;
+    border: transparent;
+}
+
+#video {
+    width: 80%;
+    height: auto;
 }
