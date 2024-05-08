@@ -40,31 +40,38 @@ window.addEventListener('load', function () {
 
     navigator.serviceWorker.getRegistration()
         .then(registration => {
-            registration.pushManager.subscribe(
-                {
-                    userVisibleOnly: true,
-                    applicationServerKey: "BB757PmYD3aPowj19csNSjH6akjspyueJryyZJjZwVhn3xkl0NmQBuAQMExEKibOB_p_EicDiBb-jQZMZcU39Xk"
-                }
-            )
-            .then(subscription => {
-                console.log("Subscription: ");
-                console.log(JSON.stringify(subscription));    
+            registration.pushManager.getSubscription()
+                .then(subscription => {
+                    if (subscription) {
+                        console.log("Existing subscription: ", JSON.stringify(subscription));                                             
+                    } else {                        
+                        registration.pushManager.subscribe({
+                            userVisibleOnly: true,
+                            applicationServerKey: "BB757PmYD3aPowj19csNSjH6akjspyueJryyZJjZwVhn3xkl0NmQBuAQMExEKibOB_p_EicDiBb-jQZMZcU39Xk"
+                        })
+                            .then(newSubscription => {
+                                console.log("New subscription: ", JSON.stringify(newSubscription));
+                                sendSubscriptionToServer(newSubscription); 
+                            })
+                            .catch(error => console.log("Error subscribing: ", error));
+                    }
+                })
+                .catch(error => console.log("Error getting subscription: ", error));
+        })
+        .catch(error => console.log("Error getting registration: ", error));
 
-                var options = {
-                    method: "POST",
-                    headers: { "Content-type": "application/json" },
-                    body: JSON.stringify(subscription)
-                };
-                fetch("api/save-subscription", options)
-                    .then(response => {
-                        console.log("Response: ", response)
-                        return response.json();
-                    })
-                    .then(response => {
-                        console.log(response)
-                    })
-                    .catch(error => console.log("Error: ", error));
+    function sendSubscriptionToServer(subscription) {
+        const options = {
+            method: "POST",
+            headers: { "Content-type": "application/json" },
+            body: JSON.stringify(subscription)
+        };
+
+        fetch("api/save-subscription", options)
+            .then(response => response.json())
+            .then(data => {
+                console.log("Server response: ", data);
             })
-            .catch(error => console.log(error));
-    });
+            .catch(error => console.log("Error sending subscription to server: ", error));
+    }
 });
