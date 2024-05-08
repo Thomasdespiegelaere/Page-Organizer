@@ -17,7 +17,7 @@ function createCard(title) {
     card.className = 'card blue-grey darken-1';
 
     card.addEventListener('click', () => {
-        window.location.href = 'http://127.0.0.1:5500/Project-Web-Apps/Page-Organizer/pages/typeselection.html?course=' + title;
+        window.location.href = 'http://localhost:3000/pages/typeselection.html?course=' + title;
     });
 
     const cardContent = document.createElement('div');

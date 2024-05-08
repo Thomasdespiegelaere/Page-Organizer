@@ -25,7 +25,7 @@ function createCard(title, course) {
     card.appendChild(cardContent);
 
     card.addEventListener('click', () => {
-        window.location.href = `http://127.0.0.1:5500/Project-Web-Apps/Page-Organizer/pages/pages.html?course=${course}&type=${title}`;
+        window.location.href = `http://localhost:3000/pages/pages.html?course=${course}&type=${title}`;
     });
 
     return card;
