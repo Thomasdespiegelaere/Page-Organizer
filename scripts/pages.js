@@ -17,7 +17,12 @@ window.addEventListener("load", async () => {
 
     document.getElementById('searchForm').addEventListener('submit', async () => {
         event.preventDefault();
-        if (searchPage.value === '' && searchTags.value === '') return;
+        if (searchPage.value === '' && searchTags.value === '')
+        {
+            grid.innerHTML = '';
+            createPageContent(type, course, grid);
+            return;
+        }
         grid.innerHTML = '';        
         var filterdImages = await db.getFilteredImages('Images', 'courseNames', course);
         filterdImages.forEach(image => {            
@@ -29,28 +34,31 @@ window.addEventListener("load", async () => {
         });
     });
 
+    createPageContent(type, course, grid);
+});
+
+async function createPageContent(type, course, grid){
     switch (type) {
-        case 'cursus':             
-                var filterdImages = await db.getFilteredImages('Images', 'courseNames', course);
-                filterdImages.forEach(image => {        
-                    if (image.type === pageType.Cursus)
-                    { 
-                        createCard(grid, image);                 
-                    }                                
-                });
+        case 'cursus':
+            var filterdImages = await db.getFilteredImages('Images', 'courseNames', course);
+            filterdImages.forEach(image => {
+                if (image.type === pageType.Cursus) {
+                    createCard(grid, image);
+                }
+            });
             break;
         case 'kladbladen':
-                var filterdImages = await db.getFilteredImages('Images', 'courseNames', course);
-                filterdImages.forEach(image => {
-                    if (image.type === pageType.Kladblad) {
-                        createCard(grid, image);
-                    }
-                });
+            var filterdImages = await db.getFilteredImages('Images', 'courseNames', course);
+            filterdImages.forEach(image => {
+                if (image.type === pageType.Kladblad) {
+                    createCard(grid, image);
+                }
+            });
             break;
         default:
             break;
-        }
-});
+    }
+}
 
 function createCard(grid, image) {    
     var card = document.createElement('div');
