@@ -1,26 +1,27 @@
 export class Video {
-
-    initVideo(video, canvas, width, height, streaming, startbutton) {       
+    constructor(video) {
         navigator.mediaDevices.enumerateDevices()
             .then(devices => {
                 console.log(devices);
-
-                // Alle devices in de selection tonen.    
-                var option = document.createElement('option');
-                option.textContent = "None";
-                option.setAttribute('data-id', "None");
-                selector.appendChild(option);
+                var deviceIds = [];
+                var deviceId;
                 for (var i = 0; i < devices.length; i++) {
                     if (devices[i].kind == "videoinput") {
-                        option = document.createElement('option');
-                        option.textContent = devices[i].label + " (" + devices[i].kind + ")";
-                        option.setAttribute('data-id', devices[i].deviceId);
-                        selector.appendChild(option);
-                        console.log("Single option: ", option);
+                        deviceIds.push(devices[i]);
+
                     }
                 }
 
-                var deviceId = selector.options[selector.selectedIndex].getAttribute("data-id");
+                deviceIds.forEach(element => {
+                    if (element.label.includes("back")) {
+                        deviceId = element.deviceId;
+                    }
+                });
+
+                if (deviceId == undefined) {
+                    deviceId = deviceIds[0].deviceId;
+                }
+                console.log("Single option: ", deviceId);
 
                 navigator.mediaDevices
                     .getUserMedia({ video: { deviceId: deviceId } })
@@ -33,40 +34,17 @@ export class Video {
                     });
             })
             .catch(error => console.log(error));
-        
-        video.addEventListener(
-            "canplay",
-            (ev) => {
-                if (!streaming) {
-                    height = video.videoHeight / (video.videoWidth / width);
-
-                    if (isNaN(height)) {
-                        height = width / (4 / 3);
-                    }
-
-                    video.setAttribute("width", width);
-                    video.setAttribute("height", height);
-                    canvas.setAttribute("width", width);
-                    canvas.setAttribute("height", height);
-                    streaming = true;
-                }
-            },
-            false,
-        );
-
-        startbutton.addEventListener(
-            "click",
-            (ev) => {
-                takepicture();
-                ev.preventDefault();
-            },
-            false,
-        );
-
-        clearphoto();    
     }
 
-    takepicture() {
+    clearphoto(canvas) {
+        const context = canvas.getContext("2d");
+        context.fillStyle = "#AAA";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+
+        const data = canvas.toDataURL("image/png");
+    }
+
+    takepicture(canvas, video, width, height, db, pageType) {
         const context = canvas.getContext("2d");
         if (width && height) {
             canvas.width = width;
@@ -74,12 +52,7 @@ export class Video {
             context.drawImage(video, 0, 0, width, height);
 
             const data = canvas.toDataURL("image/png");
-            console.log("picture", data);
-
-            var blob = dataURLtoBlob(data);
-
-            console.log("blob", blob);
-
+            var blob = this.dataURLtoBlob(data);
             var reader = new FileReader();
             reader.readAsBinaryString(blob);
 
@@ -87,36 +60,19 @@ export class Video {
                 let bits = e.target.result;
                 let imageObject = {
                     created: new Date(),
-                    data: bits
+                    data: bits,
+                    page: 3,
+                    tags: ['tag1', 'tag2'],
+                    courseName: "Wiskunde",
+                    type: pageType.Kladblad
                 };
                 console.log("ob", imageObject);
-                db.setImage(imageObject);
+                db.setImage('tempImages', imageObject);
             }
-            photo.setAttribute("src", data);
+            window.location = "http://127.0.0.1:5500/Project-Web-Apps/Page-Organizer/pages/confirm.html";
         } else {
-            clearphoto();
+            this.clearphoto();
         }
-    }
-
-    // showViewLiveResultButton() {
-    //     if (window.self !== window.top) {
-    //         document.querySelector(".contentarea").remove();
-    //         const button = document.createElement("button");
-    //         button.textContent = "View live result of the example code above";
-    //         document.body.append(button);
-    //         button.addEventListener("click", () => window.open(location.href));
-    //         return true;
-    //     }
-    //     return false;
-    // }
-
-    clearphoto() {
-        const context = canvas.getContext("2d");
-        context.fillStyle = "#AAA";
-        context.fillRect(0, 0, canvas.width, canvas.height);
-
-        const data = canvas.toDataURL("image/png");
-        photo.setAttribute("src", data);
     }
 
     dataURLtoBlob(dataURL) {

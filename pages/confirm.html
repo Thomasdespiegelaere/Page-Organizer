@@ -20,14 +20,11 @@
             <img id="photo" alt="The screen capture will appear in this box." />
             <input id="hiddenId" hidden>
         </div>
-        <label>Page: </label>
-        <input id="pageNumber" type="number">
+        <input id="pageNumber" type="number" placeholder="Page">
         <br />
-        <label>Tags (comma seperated): </label>
-        <input id="tags" type="text">
+        <input id="tags" type="text"placeholder="Tags (comma seperated)" >
         <br />
-        <label>Course name: </label>
-        <input id="courseName" type="text">
+        <input type="text" id="courseName" placeholder="Course name" required>
         <br />
         <select style="display: block;" id="type">
             <option value="1">Course book</option>
@@ -36,7 +33,7 @@
         <br />
         <br />
         <a id="save" class="waves-effect waves-light btn">Save</a>
-    </div>    
-    <script type="module" src="../scripts/PageScripts/confirm.js"></script>
+    </div>   
+    <script type="module" src="../scripts/PageScripts/confirm.js"></script>    
 </body>
 </html>
