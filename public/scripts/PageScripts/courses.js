@@ -5,6 +5,11 @@ window.addEventListener("load", async () => {
     var grid = document.querySelector('.card-grid');
     
     db.getAllCourses().then(folders => {
+        if (folders.length === 0) {      
+            const card = document.createElement('div');    
+            card.textContent = "No courses found."; 
+            grid.appendChild(card);
+        }
         folders.forEach(folder => {
             var card = createCard(folder.Name);
             grid.appendChild(card);

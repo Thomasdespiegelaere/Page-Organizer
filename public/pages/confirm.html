@@ -24,7 +24,10 @@
         <br />
         <input id="tags" type="text"placeholder="Tags (comma seperated)" >
         <br />
-        <input type="text" id="courseName" placeholder="Course name" required>
+        <div class="courses">
+            <input autocomplete="off" type="text" id="courseName" placeholder="Course name" required>
+            <ul id="autocomplete-suggestions" class="autocomplete-suggestions"></ul>
+        </div>        
         <br />
         <select style="display: block;" id="type">
             <option value="1">Course book</option>

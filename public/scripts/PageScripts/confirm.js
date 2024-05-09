@@ -4,6 +4,48 @@ var db = Db.getInstance();
 window.addEventListener("load", () => {
     console.log("loaded");
 
+    const courses = [];
+    const inputField = document.getElementById("courseName");
+    const suggestionsContainer = document.getElementById("autocomplete-suggestions");
+
+    db.getAllCourses().then(folders => {
+        folders.forEach(folder => {     
+            courses.push(folder.Name);       
+
+            inputField.addEventListener("input", function () {
+                showSuggestions(this.value);
+            });
+
+            inputField.addEventListener("blur", function () {
+                setTimeout(() => {
+                    suggestionsContainer.innerHTML = "";
+                }, 100);
+            });
+        });
+    });       
+
+    function showSuggestions(query) {
+        suggestionsContainer.innerHTML = "";
+
+        if (query.length > 0) {
+            const filtered = courses.filter(fruit =>
+                fruit.toLowerCase().startsWith(query.toLowerCase())
+            );
+
+            filtered.forEach(fruit => {
+                const suggestion = document.createElement("li");
+                suggestion.className = "autocomplete-suggestion";
+                suggestion.textContent = fruit;
+                suggestionsContainer.appendChild(suggestion);
+
+                suggestion.addEventListener("click", function () {
+                    inputField.value = fruit;
+                    suggestionsContainer.innerHTML = "";
+                });
+            });
+        }
+    }
+
     db.getLastImage('tempImages').then((image) => {
         console.log("image", image);
         document.getElementById("hiddenId").value = image.id;
