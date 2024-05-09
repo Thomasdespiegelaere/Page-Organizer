@@ -47,7 +47,7 @@ window.addEventListener('load', function () {
                     } else {                        
                         registration.pushManager.subscribe({
                             userVisibleOnly: true,
-                            applicationServerKey: "BB757PmYD3aPowj19csNSjH6akjspyueJryyZJjZwVhn3xkl0NmQBuAQMExEKibOB_p_EicDiBb-jQZMZcU39Xk"
+                            applicationServerKey: "BDt2wFhIreQupXUeE-SmeHNjXOGR-tPU8nweBvPV7fl2bvHneTRlSXXxFMwHByKskHCk-WOARxz0Yh4cYTvMnqA"
                         })
                             .then(newSubscription => {
                                 console.log("New subscription: ", JSON.stringify(newSubscription));

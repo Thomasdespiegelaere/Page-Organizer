@@ -8,8 +8,8 @@ var db = new Datastore({
 var webpush = require('web-push');
 
 const vapidKeys = {
-    publicKey: "BB757PmYD3aPowj19csNSjH6akjspyueJryyZJjZwVhn3xkl0NmQBuAQMExEKibOB_p_EicDiBb-jQZMZcU39Xk",
-    privateKey: "Az33_EvD7g2AEuQk8wMikH2RXFFrdGH_oLTteEjQ9TE"
+    publicKey: "BDt2wFhIreQupXUeE-SmeHNjXOGR-tPU8nweBvPV7fl2bvHneTRlSXXxFMwHByKskHCk-WOARxz0Yh4cYTvMnqA",
+    privateKey: "d581GPbtUXkQw0s4naf2Hz-a_Rth8Wn0qxcblnlKob4"
 };
 
 webpush.setVapidDetails(
